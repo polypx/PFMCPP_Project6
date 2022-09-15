@@ -58,16 +58,17 @@ Purpose:  This project will show you the difference between member functions and
 #include <string>
 struct T
 {
-    T(<#type name#> v, const char* <#variable name#>)   //1
-    //2
-    //3
+    T(int v, const char* n) : value(v), name(n) {}    //1  object T has an integer and a name
+    int value;                                        //2  'value' given us by compare function
+    std::string name;                                 //3  
 };
 
-struct <#structName1#>                                //4
+struct FindSmaller                               //4
 {
-    <#type name#> compare(<#type name#> a, <#type name#> b) //5
+    T* compare(T* a, T* b)      //5, compare the integer members of two different Ts, using pointers to them, a and b point to two Ts
+                                // WE'RE GOING TO HAVE TO CHECK FOR NULL POINTERS HERE TOO IF WE'RE CREATING SOME POINTERS HERE
     {
-        if( a->value < b->value ) return a;
+        if( a->value < b->value ) return a;   // ->"value" of the T pointed at by "a" < "value" of the T pointed at by "b", jeez
         if( a->value > b->value ) return b;
         return nullptr;
     }
@@ -75,7 +76,7 @@ struct <#structName1#>                                //4
 
 struct U
 {
-    float <#name1#> { 0 }, <#name2#> { 0 };
+    float uVariableA { 0 }, uVariableB { 0 };  
     <#returnType#> <#memberFunction#>(<#type name#>* <#updatedValue#>)      //12
     {
         
@@ -117,17 +118,25 @@ struct <#structname2#>
 
 int main()
 {
-    T <#name1#>( , );                                             //6
-    T <#name2#>( , );                                             //6
+    T tFirst(12, "tNameFirst");                                           //6  create a couple Ts, with some values
+    T tSecond(13, "tNameSecond");                                         //6
     
-    <#structName1#> f;                                            //7
-    auto* smaller = f.compare( , );                              //8
-    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
+    FindSmaller f;                                                        //7   create a FindSmaller object to compare Ts with 
+    auto* smaller = f.compare(&tFirst, &tSecond);                         //8   pass the ADDRESS of each T, not the whole shebang
+    if(smaller != nullptr)                                                //    check smaller (return from f.compare) is actually not nullptr 
+    {    
+    std::cout << "the smaller one is << " << smaller->name << std::endl;  //9   print the name of the T instance pointed at by smaller  
+    }
+    else
+    {
+    std::cout << "Either the two integers are equal or one of them is not defined. "  << std::endl;  //9   reason for nullptr     
+    }    
+
     
-    U <#name3#>;
+    U uFirst;                                                             //  create a U 
     float updatedValue = 5.f;
     std::cout << "[static func] <#name3#>'s multiplied values: " << <#structname2#>::<#staticFunctionA#>( , ) << std::endl;                  //11
     
-    U <#name4#>;
+    U uSecond;                                                            //  create another U 
     std::cout << "[member func] <#name4#>'s multiplied values: " << <#name4#>.<#memberFunction#>( &updatedValue ) << std::endl;
 }
