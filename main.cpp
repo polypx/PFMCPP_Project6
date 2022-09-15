@@ -150,12 +150,16 @@ int main()
     std::cout << "Either the two values are equal or one is nullptr"  << std::endl;  //   reasons for smaller being nullptr     
     }    
     
-    U uFirst;                                                             //  create a U 
-    float updatedValue = 5.f;                                             //  create a float value
+    U uFirst;                                                   //  create a U 
+    float updatedValue = 5.f;                                   //  create a float value
     
     std::cout << "[static func] uFirst's multiplied values: "  << DoingSomething::updatingFunction(&uFirst, &updatedValue) << std::endl; 
+                                                                // we access updatingFunction by class name::method
+                                                                // it exists even though there is no object of type 'DoingSomething'
+                                                                // ie. the static function exists all the time, static variables too
 
-    U uSecond;                                                            //  create another U 
+    U uSecond;                                                  //  create another U 
     std::cout << "[member func] uSecond's multiplied values: " << uSecond.uMemberFunction( &updatedValue ) << std::endl;
+                                                                // we access this version of the function by class.member method
 }
 
