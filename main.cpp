@@ -79,11 +79,11 @@ struct FindSmaller                               //4
 struct U
 {
     float uVariableA { 0 }, uVariableB { 0 };  
-    float uMemberFunction(float* updatedValue)                              //    all that's become this's, nice
+    float uMemberFunction(float* updatedValue)                              
     {
         if (updatedValue != nullptr)                                        // new pointers! check not null
         {
-            std::cout << "U's uVariableA value: " << this->uVariableA << std::endl;
+            std::cout << "U's uVariableA value: " << this->uVariableA << std::endl;    // all that's become this's
             this->uVariableA = *updatedValue;                                                  
             std::cout << "U's uVariableA updated value: " << this->uVariableA<< std::endl;
             while( std::abs(this->uVariableB - this->uVariableA) > 0.001f )
@@ -93,14 +93,14 @@ struct U
             std::cout << "U's uVariableB updated value: " << this->uVariableB << std::endl;
             return this->uVariableB * this->uVariableA;
         }
-        return 0;
+        return 0;  // just to return something in case nullptr
     }    
 };
 
 struct DoingSomething
 {
-    static float updatingFunction(U* that, float* updatedValue)        //10  'that' pointer to a U, pointer to a float
-    {                                                                   // here again some new pointers!!!! check not null
+    static float updatingFunction(U* that, float* updatedValue)     //10  'that' pointer to a U, pointer to a float
+    {                                                               // here again some new pointers!!!! check not null
         if( that != nullptr && updatedValue != nullptr )
         {
             std::cout << "U's uVariableA value: " << that->uVariableA << std::endl;
@@ -116,7 +116,7 @@ struct DoingSomething
             std::cout << "U's uVariableB updated value: " << that->uVariableB << std::endl;
             return that->uVariableB * that->uVariableA;
         }
-        return 0;
+        return 0;  // just to return something in case nullptr
     }    
 };
         
@@ -137,23 +137,25 @@ struct DoingSomething
 int main()
 {
     T tFirst(12, "tNameFirst");                                           //6  create a couple Ts, with some values
-    T tSecond(13, "tNameSecond");                                         //6
+    T tSecond(11, "tNameSecond");                                         //6
     
     FindSmaller f;                                                        //7   create a FindSmaller object to compare Ts with 
     auto* smaller = f.compare(&tFirst, &tSecond);                         //8   pass the ADDRESS of each T, not the whole shebang
-    if(smaller != nullptr)                                                //    check smaller (return from f.compare) is actually not nullptr 
+    if(smaller != nullptr)                                                //    check smaller pointer is not nullptr 
     {    
     std::cout << "the smaller one is << " << smaller->name << std::endl;  //9   print the name of the T instance pointed at by smaller  
     }
     else
     {
-    std::cout << "Either the two values are equal or at least one of them is nullptr"  << std::endl;  //9   reason for nullptr     
+    std::cout << "Either the two values are equal or one is nullptr"  << std::endl;  //   reasons for smaller being nullptr     
     }    
     
     U uFirst;                                                             //  create a U 
-    float updatedValue = 5.f;
-    std::cout << "[static func] uFirsts multiplied values: "  << DoingSomething::updatingFunction(&uFirst , &updatedValue) << std::endl;   //11
+    float updatedValue = 5.f;                                             //  create a float value
+    
+    std::cout << "[static func] uFirst's multiplied values: "  << DoingSomething::updatingFunction(&uFirst, &updatedValue) << std::endl; 
 
     U uSecond;                                                            //  create another U 
-    std::cout << "[member func] uSeconds multiplied values: " << uSecond.uMemberFunction( &updatedValue ) << std::endl;
+    std::cout << "[member func] uSecond's multiplied values: " << uSecond.uMemberFunction( &updatedValue ) << std::endl;
 }
+
