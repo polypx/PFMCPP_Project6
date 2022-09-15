@@ -79,9 +79,17 @@ struct FindSmaller                               //4
 struct U
 {
     float uVariableA { 0 }, uVariableB { 0 };  
-    float uMemberFunction(float* updatedValue)      // 12 
+    float uMemberFunction(float* updatedValue)                              //    all that's become this's, nice
     {
-        
+        std::cout << "U's uVariableA value: " << this->uVariableA << std::endl;
+        this->uVariableA = *updatedValue;                                                  
+        std::cout << "U's uVariableA updated value: " << this->uVariableA<< std::endl;
+        while( std::abs(this->uVariableB - this->uVariableA) > 0.001f )
+        {
+            this->uVariableB += 0.1f;
+        }
+        std::cout << "U's uVariableB updated value: " << this->uVariableB << std::endl;
+        return this->uVariableB * this->uVariableA;
     }
 };
 
@@ -133,7 +141,6 @@ int main()
     {
     std::cout << "Either the two values are equal or at least one of them is nullptr"  << std::endl;  //9   reason for nullptr     
     }    
-
     
     U uFirst;                                                             //  create a U 
     float updatedValue = 5.f;
