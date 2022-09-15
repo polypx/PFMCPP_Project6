@@ -67,11 +67,12 @@ struct FindSmaller                               //4
 {
     T* compare(T* a, T* b)      //5, compare the integer members of two different Ts, using pointers to them, a and b point to two Ts
                                 // WE'RE GOING TO HAVE TO CHECK FOR NULL POINTERS HERE TOO IF WE'RE CREATING SOME POINTERS HERE
+    if(a != nullptr && b != nullptr)
     {
         if( a->value < b->value ) return a;   // ->"value" of the T pointed at by "a" < "value" of the T pointed at by "b", jeez
         if( a->value > b->value ) return b;
-        return nullptr;
     }
+    return nullptr;
 };
 
 struct U
@@ -129,7 +130,7 @@ int main()
     }
     else
     {
-    std::cout << "Either the two integers are equal or one of them is not defined. "  << std::endl;  //9   reason for nullptr     
+    std::cout << "Either the two are equal or one of them is nullptr."  << std::endl;  //9   reason for nullptr     
     }    
 
     
