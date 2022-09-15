@@ -81,35 +81,43 @@ struct U
     float uVariableA { 0 }, uVariableB { 0 };  
     float uMemberFunction(float* updatedValue)                              //    all that's become this's, nice
     {
-        std::cout << "U's uVariableA value: " << this->uVariableA << std::endl;
-        this->uVariableA = *updatedValue;                                                  
-        std::cout << "U's uVariableA updated value: " << this->uVariableA<< std::endl;
-        while( std::abs(this->uVariableB - this->uVariableA) > 0.001f )
+        if (updatedValue != nullptr)                                        // new pointers! check not null
         {
-            this->uVariableB += 0.1f;
+            std::cout << "U's uVariableA value: " << this->uVariableA << std::endl;
+            this->uVariableA = *updatedValue;                                                  
+            std::cout << "U's uVariableA updated value: " << this->uVariableA<< std::endl;
+            while( std::abs(this->uVariableB - this->uVariableA) > 0.001f )
+            {
+                this->uVariableB += 0.1f;
+            }
+            std::cout << "U's uVariableB updated value: " << this->uVariableB << std::endl;
+            return this->uVariableB * this->uVariableA;
         }
-        std::cout << "U's uVariableB updated value: " << this->uVariableB << std::endl;
-        return this->uVariableB * this->uVariableA;
-    }
+        return 0;
+    }    
 };
 
 struct DoingSomething
 {
-    static float updatingFunction(U* that, float* updatedValue )        //10  'that' pointer to a U, pointer to a float
-    {
-        std::cout << "U's uVariableA value: " << that->uVariableA << std::endl;
-        that->uVariableA = *updatedValue;                            //  copy the actual value float, "dereference", into 'that' actual U object                   
-        std::cout << "U's uVariableA updated value: " << that->uVariableA<< std::endl;
-        while( std::abs(that->uVariableB - that->uVariableA) > 0.001f )   
+    static float updatingFunction(U* that, float* updatedValue)        //10  'that' pointer to a U, pointer to a float
+    {                                                                   // here again some new pointers!!!! check not null
+        if( that != nullptr && updatedValue != nullptr )
         {
-            /*
-             write something that makes the distance between that->uVariableB and that->uVariableA get smaller
-             */
-            that->uVariableB += 0.1f;
+            std::cout << "U's uVariableA value: " << that->uVariableA << std::endl;
+            that->uVariableA = *updatedValue;                            //  copy the actual value float, "dereference", into 'that' actual U object                   
+            std::cout << "U's uVariableA updated value: " << that->uVariableA<< std::endl;
+            while( std::abs(that->uVariableB - that->uVariableA) > 0.001f )   
+            {
+                /*
+                 write something that makes the distance between that->uVariableB and that->uVariableA get smaller
+                 */
+                that->uVariableB += 0.1f;
+            }
+            std::cout << "U's uVariableB updated value: " << that->uVariableB << std::endl;
+            return that->uVariableB * that->uVariableA;
         }
-        std::cout << "U's uVariableB updated value: " << that->uVariableB << std::endl;
-        return that->uVariableB * that->uVariableA;
-    }
+        return 0;
+    }    
 };
         
 /*
