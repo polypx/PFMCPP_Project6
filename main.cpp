@@ -95,12 +95,12 @@ struct U
 
 struct DoingSomething
 {
-    static float updatingFunction(U* that, float* updatedValue )        //10  'that' pointer to U above
+    static float updatingFunction(U* that, float* updatedValue )        //10  'that' pointer to a U, pointer to a float
     {
         std::cout << "U's uVariableA value: " << that->uVariableA << std::endl;
-        that->uVariableA = *updatedValue;                                                  
+        that->uVariableA = *updatedValue;                            //  copy the actual value float, "dereference", into 'that' actual U object                   
         std::cout << "U's uVariableA updated value: " << that->uVariableA<< std::endl;
-        while( std::abs(that->uVariableB - that->uVariableA) > 0.001f )
+        while( std::abs(that->uVariableB - that->uVariableA) > 0.001f )   
         {
             /*
              write something that makes the distance between that->uVariableB and that->uVariableA get smaller
