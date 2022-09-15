@@ -60,36 +60,36 @@ struct T
 {
     T(int v, const char* n) : value(v), name(n) {}    //1  object T has an integer and a name
     int value;                                        //2  'value' given us by compare function
-    std::string name;                                 //3  
+    std::string name;                                 //3  'name' from main
 };
 
 struct FindSmaller                               //4
 {
     T* compare(T* a, T* b)      //5, compare the integer members of two different Ts, using pointers to them, a and b point to two Ts
-                                // WE'RE GOING TO HAVE TO CHECK FOR NULL POINTERS HERE TOO IF WE'RE CREATING SOME POINTERS HERE
-    if(a != nullptr && b != nullptr)
+                                
+    if(a != nullptr && b != nullptr) // WE'RE GOING TO HAVE TO CHECK FOR NULL POINTERS HERE TOO IF WE'RE CREATING SOME POINTERS 
     {
         if( a->value < b->value ) return a;   // ->"value" of the T pointed at by "a" < "value" of the T pointed at by "b", jeez
         if( a->value > b->value ) return b;
     }
-    return nullptr;
+    return nullptr;                           // return nullptr if either a or b is null, or if a and b point to the same value
 };
 
 struct U
 {
     float uVariableA { 0 }, uVariableB { 0 };  
-    <#returnType#> <#memberFunction#>(<#type name#>* <#updatedValue#>)      //12
+    float <#memberFunction#>(<#type name#>* <#updatedValue#>)      // 12 only had floats, so must return float
     {
         
     }
 };
 
-struct <#structname2#>
+struct DoingSomething
 {
-    static <#returntype#> <#staticFunctionA#>(U* that, <#type name#>* <#updatedValue#> )        //10
+    static float updatingFunction(U* that, <#type name#>* <#updatedValue#> )        //10  'that'?  pointer to U above
     {
         std::cout << "U's <#name1#> value: " << that-><#name1#> << std::endl;
-        that-><#name1#> = <#updatedValue#>;
+        that-><#name1#> = <#updatedValue#>;                                                  
         std::cout << "U's <#name1#> updated value: " << that-><#name1#> << std::endl;
         while( std::abs(that-><#name2#> - that-><#name1#>) > 0.001f )
         {
@@ -136,8 +136,8 @@ int main()
     
     U uFirst;                                                             //  create a U 
     float updatedValue = 5.f;
-    std::cout << "[static func] <#name3#>'s multiplied values: " << <#structname2#>::<#staticFunctionA#>( , ) << std::endl;                  //11
-    
+    std::cout << "[static func] uInst1s multiplied values: "  << DoingSomething::updatingFunction(&uFirst , &updatedValue) << std::endl;   //11
+
     U uSecond;                                                            //  create another U 
-    std::cout << "[member func] <#name4#>'s multiplied values: " << <#name4#>.<#memberFunction#>( &updatedValue ) << std::endl;
+    std::cout << "[member func] uSeconds multiplied values: " << uSecond.<#memberFunction#>( &updatedValue ) << std::endl;
 }
