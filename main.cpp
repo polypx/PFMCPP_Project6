@@ -143,11 +143,11 @@ int main()
     auto* smaller = f.compare(&tFirst, &tSecond);                         //8   pass the ADDRESS of each T, not the whole shebang
     if(smaller != nullptr)                                                //    check smaller pointer is not nullptr 
     {    
-    std::cout << "the smaller one is << " << smaller->name << std::endl;  //9   print the name of the T instance pointed at by smaller  
+        std::cout << "the smaller one is << " << smaller->name << std::endl;  //9   print the name of the T instance pointed at by smaller  
     }
     else
     {
-    std::cout << "Either the two values are equal or one is nullptr"  << std::endl;  //   reasons for smaller being nullptr     
+        std::cout << "Either the two values are equal or one is nullptr"  << std::endl;  //   reasons for smaller being nullptr     
     }    
     
     U uFirst;                                                   //  create a U 
