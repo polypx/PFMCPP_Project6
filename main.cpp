@@ -66,19 +66,20 @@ struct T
 struct FindSmaller                               //4
 {
     T* compare(T* a, T* b)      //5, compare the integer members of two different Ts, using pointers to them, a and b point to two Ts
-                                
-    if(a != nullptr && b != nullptr) // WE'RE GOING TO HAVE TO CHECK FOR NULL POINTERS HERE TOO IF WE'RE CREATING SOME POINTERS 
-    {
-        if( a->value < b->value ) return a;   // ->"value" of the T pointed at by "a" < "value" of the T pointed at by "b", jeez
-        if( a->value > b->value ) return b;
-    }
-    return nullptr;                           // return nullptr if either a or b is null, or if a and b point to the same value
+    {                          
+        if(a != nullptr && b != nullptr) // WE'RE GOING TO HAVE TO CHECK FOR NULL POINTERS HERE TOO IF WE'RE CREATING SOME POINTERS 
+        {
+            if( a->value < b->value ) return a;   // ->"value" of the T pointed at by "a" < "value" of the T pointed at by "b", jeez
+            if( a->value > b->value ) return b;
+        }
+        return nullptr;                           // return nullptr if either a or b is null, or if a and b point to the same value
+    }    
 };
 
 struct U
 {
     float uVariableA { 0 }, uVariableB { 0 };  
-    float <#memberFunction#>(<#type name#>* <#updatedValue#>)      // 12 only had floats, so must return float
+    float uMemberFunction(float* updatedValue)      // 12 
     {
         
     }
@@ -86,20 +87,20 @@ struct U
 
 struct DoingSomething
 {
-    static float updatingFunction(U* that, <#type name#>* <#updatedValue#> )        //10  'that'?  pointer to U above
+    static float updatingFunction(U* that, float* updatedValue )        //10  'that' pointer to U above
     {
-        std::cout << "U's <#name1#> value: " << that-><#name1#> << std::endl;
-        that-><#name1#> = <#updatedValue#>;                                                  
-        std::cout << "U's <#name1#> updated value: " << that-><#name1#> << std::endl;
-        while( std::abs(that-><#name2#> - that-><#name1#>) > 0.001f )
+        std::cout << "U's uVariableA value: " << that->uVariableA << std::endl;
+        that->uVariableA = *updatedValue;                                                  
+        std::cout << "U's uVariableA updated value: " << that->uVariableA<< std::endl;
+        while( std::abs(that->uVariableB - that->uVariableA) > 0.001f )
         {
             /*
-             write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
+             write something that makes the distance between that->uVariableB and that->uVariableA get smaller
              */
-            that-><#name2#> += ;
+            that->uVariableB += 0.1f;
         }
-        std::cout << "U's <#name2#> updated value: " << that-><#name2#> << std::endl;
-        return that-><#name2#> * that-><#name1#>;
+        std::cout << "U's uVariableB updated value: " << that->uVariableB << std::endl;
+        return that->uVariableB * that->uVariableA;
     }
 };
         
@@ -130,14 +131,14 @@ int main()
     }
     else
     {
-    std::cout << "Either the two are equal or one of them is nullptr."  << std::endl;  //9   reason for nullptr     
+    std::cout << "Either the two values are equal or at least one of them is nullptr"  << std::endl;  //9   reason for nullptr     
     }    
 
     
     U uFirst;                                                             //  create a U 
     float updatedValue = 5.f;
-    std::cout << "[static func] uInst1s multiplied values: "  << DoingSomething::updatingFunction(&uFirst , &updatedValue) << std::endl;   //11
+    std::cout << "[static func] uFirsts multiplied values: "  << DoingSomething::updatingFunction(&uFirst , &updatedValue) << std::endl;   //11
 
     U uSecond;                                                            //  create another U 
-    std::cout << "[member func] uSeconds multiplied values: " << uSecond.<#memberFunction#>( &updatedValue ) << std::endl;
+    std::cout << "[member func] uSeconds multiplied values: " << uSecond.uMemberFunction( &updatedValue ) << std::endl;
 }
