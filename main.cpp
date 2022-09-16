@@ -40,7 +40,7 @@ struct FindSmaller                               //4
     {                          
         if( a.value < b.value ) return &a;      // still need to return a pointer, hence return the ADDRESS of &a or &b
         if( a.value > b.value ) return &b;
-        return nullptr;                           // return nullptr if a and b point to the same value
+        return nullptr;                         // return nullptr if a and b point to the same value
     }    
 };
 
@@ -104,30 +104,25 @@ struct DoingSomething
 
 int main()
 {
-    T tFirst(12, "tNameFirst");                                           //6  create a couple Ts, with some values
-    T tSecond(11, "tNameSecond");                                         //6
+    T tFirst(12, "tNameFirst");                                       
+    T tSecond(11, "tNameSecond");                           
     
-    FindSmaller f;                                                        //7   create a FindSmaller object to compare Ts with 
-    auto* smaller = f.compare(tFirst, tSecond);                         //8   pass the actual object this time ||||||||||||||||||||||
-    if(smaller != nullptr)                                                //    check smaller pointer is not nullptr 
+    FindSmaller f;                                        
+    auto* smaller = f.compare(tFirst, tSecond);                     //8   pass the actual object this time ||||||||||||||||||||||
+    if(smaller != nullptr)                                          //    check smaller pointer is not nullptr 
     {    
         std::cout << "the smaller one is << " << smaller->name << std::endl;  //9   print the name of the T instance pointed at by smaller  
     }
     else
     {
-        std::cout << "Either the two values are equal or one is nullptr"  << std::endl;  //   reasons for smaller being nullptr     
+        std::cout << "The two values must be equal."  << std::endl;  //   only reason for smaller being nullptr   
     }    
     
-    U uFirst;                                                   //  create a U 
-    float updatedValue = 5.f;                                   //  create a float value
-    
+    U uFirst;                                               
+    float updatedValue = 5.f;                               
     std::cout << "[static func] uFirst's multiplied values: "  << DoingSomething::updatingFunction(&uFirst, &updatedValue) << std::endl; 
-                                                                // we access updatingFunction by class name::method
-                                                                // it exists even though there is no object of type 'DoingSomething'
-                                                                // ie. the static function exists all the time, static variables too
 
-    U uSecond;                                                  //  create another U 
+    U uSecond;                                           
     std::cout << "[member func] uSecond's multiplied values: " << uSecond.uMemberFunction( &updatedValue ) << std::endl;
-                                                                // we access this version of the function by class.member method
 }
 
