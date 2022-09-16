@@ -36,14 +36,11 @@ struct T
 
 struct FindSmaller                               //4
 {
-    T* compare(T* a, T* b)      //5, compare the integer members of two different Ts, using pointers to them, a and b point to two Ts
+    T* compare(T& a, T& b)      //5, compare the integer members of two different Ts, using pointers to them, a and b point to two Ts
     {                          
-        if(a != nullptr && b != nullptr) // WE'RE GOING TO HAVE TO CHECK FOR NULL POINTERS HERE TOO IF WE'RE CREATING SOME POINTERS 
-        {
-            if( a->value < b->value ) return a;   // ->"value" of the T pointed at by "a" < "value" of the T pointed at by "b", jeez
-            if( a->value > b->value ) return b;
-        }
-        return nullptr;                           // return nullptr if either a or b is null, or if a and b point to the same value
+        if( a.value < b.value ) return &a;      // still need to return a pointer, hence return the ADDRESS of &a or &b
+        if( a.value > b.value ) return &b;
+        return nullptr;                           // return nullptr if a and b point to the same value
     }    
 };
 
@@ -111,7 +108,7 @@ int main()
     T tSecond(11, "tNameSecond");                                         //6
     
     FindSmaller f;                                                        //7   create a FindSmaller object to compare Ts with 
-    auto* smaller = f.compare(&tFirst, &tSecond);                         //8   pass the ADDRESS of each T, not the whole shebang
+    auto* smaller = f.compare(tFirst, tSecond);                         //8   pass the actual object this time ||||||||||||||||||||||
     if(smaller != nullptr)                                                //    check smaller pointer is not nullptr 
     {    
         std::cout << "the smaller one is << " << smaller->name << std::endl;  //9   print the name of the T instance pointed at by smaller  
