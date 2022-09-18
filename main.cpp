@@ -47,7 +47,7 @@ struct FindSmaller
 struct U
 {
     float uVariableA { 0 }, uVariableB { 0 };  
-    float uMemberFunction(float& updatedValue)                              
+    float uMemberFunction(const float& updatedValue)  // this reference can be const because function doesn't change the input                        
     {
         std::cout << "U's uVariableA value: " << uVariableA << std::endl;  
         uVariableA = updatedValue;                                                  
@@ -63,7 +63,7 @@ struct U
 
 struct DoingSomething
 {
-    static float updatingFunction(U& that, float& updatedValue)     //10  'that' reference to a U, reference to a float
+    static float updatingFunction(U& that, const float& updatedValue)  // this float reference can be const, function doesn't change the input  
     {   
         std::cout << "U's uVariableA value: " << that.uVariableA << std::endl; // now all uVariables are members of that
         that.uVariableA = updatedValue;                                     
