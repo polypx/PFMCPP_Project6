@@ -63,9 +63,9 @@ struct U
 
 struct DoingSomething
 {
-    static float updatingFunction(U& that, const float& updatedValue)  // this float reference can be const, function doesn't change the input  
+    static float updatingFunction(U& that, const float& updatedValue)  // float reference can be const, function doesn't change the input  
     {   
-        std::cout << "U's uVariableA value: " << that.uVariableA << std::endl; // now all uVariables are members of that
+        std::cout << "U's uVariableA value: " << that.uVariableA << std::endl; // now uVariables are MEMBERS of that
         that.uVariableA = updatedValue;                                     
         std::cout << "U's uVariableA updated value: " << that.uVariableA<< std::endl;
         while( std::abs(that.uVariableB - that.uVariableA) > 0.001f )   
