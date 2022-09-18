@@ -47,21 +47,17 @@ struct FindSmaller
 struct U
 {
     float uVariableA { 0 }, uVariableB { 0 };  
-    float uMemberFunction(float* updatedValue)                              
+    float uMemberFunction(float& updatedValue)                              
     {
-        if (updatedValue != nullptr)          // new pointers! check not null
+        std::cout << "U's uVariableA value: " << uVariableA << std::endl;  
+        uVariableA = updatedValue;                                                  
+        std::cout << "U's uVariableA updated value: " << uVariableA<< std::endl;
+        while( std::abs(uVariableB - uVariableA) > 0.001f )
         {
-            std::cout << "U's uVariableA value: " << this->uVariableA << std::endl;    // all that's become this's
-            this->uVariableA = *updatedValue;                                                  
-            std::cout << "U's uVariableA updated value: " << this->uVariableA<< std::endl;
-            while( std::abs(this->uVariableB - this->uVariableA) > 0.001f )
-            {
-                this->uVariableB += 0.1f;
-            }
-            std::cout << "U's uVariableB updated value: " << this->uVariableB << std::endl;
-            return this->uVariableB * this->uVariableA;
+            uVariableB += 0.1f;
         }
-        return 0;  // just to return something in case nullptr
+        std::cout << "U's uVariableB updated value: " << uVariableB << std::endl;
+        return uVariableB * uVariableA;
     }    
 };
 
@@ -69,18 +65,18 @@ struct DoingSomething
 {
     static float updatingFunction(U& that, float& updatedValue)     //10  'that' reference to a U, reference to a float
     {   
-            std::cout << "U's uVariableA value: " << that.uVariableA << std::endl; // now all uVariables are members of that
-            that.uVariableA = updatedValue;                                     
-            std::cout << "U's uVariableA updated value: " << that.uVariableA<< std::endl;
-            while( std::abs(that.uVariableB - that.uVariableA) > 0.001f )   
-            {
-                /*
-                 write something that makes the distance between that->uVariableB and that->uVariableA get smaller
-                 */
-                that.uVariableB += 0.1f;
-            }
-            std::cout << "U's uVariableB updated value: " << that.uVariableB << std::endl;
-            return that.uVariableB * that.uVariableA;
+        std::cout << "U's uVariableA value: " << that.uVariableA << std::endl; // now all uVariables are members of that
+        that.uVariableA = updatedValue;                                     
+        std::cout << "U's uVariableA updated value: " << that.uVariableA<< std::endl;
+        while( std::abs(that.uVariableB - that.uVariableA) > 0.001f )   
+        {
+            /*
+             write something that makes the distance between that->uVariableB and that->uVariableA get smaller
+             */
+            that.uVariableB += 0.1f;
+        }
+        std::cout << "U's uVariableB updated value: " << that.uVariableB << std::endl;
+        return that.uVariableB * that.uVariableA;
     }    
 };
         
@@ -119,6 +115,6 @@ int main()
     std::cout << "[static func] uFirst's multiplied values: " << DoingSomething::updatingFunction(uFirst, updatedValue) << std::endl; 
 
     U uSecond;                                           
-    std::cout << "[member func] uSecond's multiplied values: " << uSecond.uMemberFunction( &updatedValue ) << std::endl;
+    std::cout << "[member func] uSecond's multiplied values: " << uSecond.uMemberFunction( updatedValue ) << std::endl;
 }
 
