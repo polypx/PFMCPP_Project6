@@ -67,24 +67,20 @@ struct U
 
 struct DoingSomething
 {
-    static float updatingFunction(U* that, float* updatedValue)     //10  'that' pointer to a U, pointer to a float
-    {                                                               // here again some new pointers!!!! check not null
-        if( that != nullptr && updatedValue != nullptr )
-        {
-            std::cout << "U's uVariableA value: " << that->uVariableA << std::endl;
-            that->uVariableA = *updatedValue;                            //  copy the actual value float, "dereference", into 'that' actual U object                   
-            std::cout << "U's uVariableA updated value: " << that->uVariableA<< std::endl;
-            while( std::abs(that->uVariableB - that->uVariableA) > 0.001f )   
+    static float updatingFunction(U& that, float& updatedValue)     //10  'that' reference to a U, reference to a float
+    {   
+            std::cout << "U's uVariableA value: " << that.uVariableA << std::endl; // now all uVariables are members of that
+            that.uVariableA = updatedValue;                                     
+            std::cout << "U's uVariableA updated value: " << that.uVariableA<< std::endl;
+            while( std::abs(that.uVariableB - that.uVariableA) > 0.001f )   
             {
                 /*
                  write something that makes the distance between that->uVariableB and that->uVariableA get smaller
                  */
-                that->uVariableB += 0.1f;
+                that.uVariableB += 0.1f;
             }
-            std::cout << "U's uVariableB updated value: " << that->uVariableB << std::endl;
-            return that->uVariableB * that->uVariableA;
-        }
-        return 0;  // just to return something in case nullptr
+            std::cout << "U's uVariableB updated value: " << that.uVariableB << std::endl;
+            return that.uVariableB * that.uVariableA;
     }    
 };
         
@@ -120,7 +116,7 @@ int main()
     
     U uFirst;                                               
     float updatedValue = 5.f;                               
-    std::cout << "[static func] uFirst's multiplied values: "  << DoingSomething::updatingFunction(&uFirst, &updatedValue) << std::endl; 
+    std::cout << "[static func] uFirst's multiplied values: " << DoingSomething::updatingFunction(uFirst, updatedValue) << std::endl; 
 
     U uSecond;                                           
     std::cout << "[member func] uSecond's multiplied values: " << uSecond.uMemberFunction( &updatedValue ) << std::endl;
