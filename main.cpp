@@ -29,18 +29,18 @@ Create a branch named Part2
 #include <string>
 struct T
 {
-    T(int v, const char* n) : value(v), name(n) {}    //1  object T has an integer and a name
-    int value;                                        //2  'value' given us by compare function
-    std::string name;                                 //3  'name' from main
+    T(int v, const char* n) : value(v), name(n) {}    
+    int value;                                        
+    std::string name;                                 
 };
 
-struct FindSmaller                               //4
+struct FindSmaller                              
 {
-    T* compare(T& a, T& b)      //5, compare the integer members of two different Ts, using pointers to them, a and b point to two Ts
+    T* compare(T& a, T& b)                      //5, pass references to two different T objects
     {                          
-        if( a.value < b.value ) return &a;      // still need to return a pointer, hence return the ADDRESS of &a or &b
+        if( a.value < b.value ) return &a;      // still need to RETURN a pointer
         if( a.value > b.value ) return &b;
-        return nullptr;                         // return nullptr if a and b point to the same value
+        return nullptr;                         // return nullptr if a.value and b.value equal
     }    
 };
 
@@ -49,7 +49,7 @@ struct U
     float uVariableA { 0 }, uVariableB { 0 };  
     float uMemberFunction(float* updatedValue)                              
     {
-        if (updatedValue != nullptr)                                        // new pointers! check not null
+        if (updatedValue != nullptr)          // new pointers! check not null
         {
             std::cout << "U's uVariableA value: " << this->uVariableA << std::endl;    // all that's become this's
             this->uVariableA = *updatedValue;                                                  
@@ -108,14 +108,14 @@ int main()
     T tSecond(11, "tNameSecond");                           
     
     FindSmaller f;                                        
-    auto* smaller = f.compare(tFirst, tSecond);                     //8   pass the actual object this time ||||||||||||||||||||||
-    if(smaller != nullptr)                                          //    check smaller pointer is not nullptr 
+    auto* smaller = f.compare(tFirst, tSecond); // smaller still must be pointer because we don't know result 
+    if(smaller != nullptr)                  
     {    
-        std::cout << "the smaller one is << " << smaller->name << std::endl;  //9   print the name of the T instance pointed at by smaller  
+        std::cout << "the smaller one is << " << smaller->name << std::endl;  
     }
     else
     {
-        std::cout << "The two values must be equal."  << std::endl;  //   only reason for smaller being nullptr   
+        std::cout << "The two values must be equal."  << std::endl;  // only reason for smaller being nullptr   
     }    
     
     U uFirst;                                               
